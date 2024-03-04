@@ -19,6 +19,11 @@ public class Mario {
 
         Rectangle a = new Rectangle(x, y, w, h, "RED");
         rects[0] = a;
+
+        JFrame panel = new JFrame("Tile Puzzle");
+        panel.add(new JLabel(new ImageIcon("Sprites/Mario_Right.png")));
+        panel.pack();
+        panel.setVisible(true);
     }
 
     public Rectangle getRect() {
