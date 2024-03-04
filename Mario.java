@@ -4,6 +4,11 @@ public class Mario {
     private int w = 50;
     private int h = 100;
 
+    int velocity_x = 0;
+    int velocity_y = 0;
+
+    int old_velocity_y = 0;
+
     private int speed = 7;
 
     private Rectangle[] rects = new Rectangle[1];
@@ -37,19 +42,27 @@ public class Mario {
         int dir_x = 0;
         int dir_y = 0;
 
-        if (arena.leftPressed() && x > 7) {
+        if (arena.leftPressed() && x > 0) {
             dir_x = -1;
         }
-        if (arena.rightPressed() && x < arena.getWidth() - 14) {
+        
+        if (arena.rightPressed() && x < arena.getWidth() - 50) {
             dir_x = 1;
         }
-        if (arena.downPressed() && y < arena.getHeight() - 14){
-            dir_y = 1;
+        
+        if (y < arena.getHeight() - 100) {
+            velocity_y += 1;
         }
-        if (arena.upPressed() && y > 7) {
-            dir_y = -1;
+        else {
+            velocity_y = 0;
+        }
+        
+        if (arena.upPressed() && velocity_y == 0 && old_velocity_y == velocity_y) {
+            velocity_y = -20;
         }
 
-        move(dir_x * speed, dir_y * speed);
+        move(dir_x * speed, velocity_y);
+
+        old_velocity_y = velocity_y;
     }
 }
