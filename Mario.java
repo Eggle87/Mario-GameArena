@@ -1,6 +1,3 @@
-import javax.swing.*;
-import javax.swing.filechooser.FileView;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

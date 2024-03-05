@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+
 public class Main {
 
     public static void main(String[] args)
@@ -9,6 +11,8 @@ public class Main {
 
         mario.addTo(arena);
 
+        Grid(arena);
+
         while(true)
         {
             mario.update(arena);
@@ -17,7 +21,6 @@ public class Main {
 
             arena.pause();
         }
-        Grid(arena);
     }
     public static void Grid(GameArena arena)
     {
