@@ -16,10 +16,11 @@ public class Main {
         while(true)
         {
             mario.update(arena);
-
             arena.pause();
         }
     }
+
+    // Creates a grid
     public static void Grid(GameArena arena)
     {
         for(double i=0;i<=500;i=i+50)

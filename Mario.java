@@ -5,10 +5,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Mario {
-    //Declare variables
     private int x;
     private int y;
-    private int w = 100;
+    private int w = 50;
     private int h = 100;
     private BufferedImage marioImage;
 
@@ -16,26 +15,27 @@ public class Mario {
     int velocity_y = 0;
     int old_velocity_y = 0;
 
-    private int speed = 7;
+    private int SPEED = 7;
 
+    // The sprites that comprise mario
     private Sprite[] sprites = new Sprite[1];
 
     public Mario(int _x, int _y) {
         this.x = _x;
         this.y = _y;
 
-        //Get mario sprint png
+        //Get mario sprite png
         try {
             marioImage = ImageIO.read(new File("Sprites/Mario_Left.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Sprite b = new Sprite(x, y, w, h, marioImage);
-        sprites[0] = b;
+        Sprite s = new Sprite(x, y, w, h, marioImage);
+        sprites[0] = s;
     }
 
-
+    // Adds the sprites to the GameArena
     public void addTo(GameArena arena) {
         for (int i = 0; i < sprites.length; i++)
             arena.addSprite(sprites[i]);
@@ -49,12 +49,11 @@ public class Mario {
         sprites[i].move(dx, dy);
     }
 
-
-    //All for movement
+    // Updates every frame
     public void update(GameArena arena) {
         int dir_x = 0;
-        int dir_y = 0;
 
+        // Movement
         if (arena.leftPressed() && x > 0) {
             dir_x = -1;
         }
@@ -63,17 +62,19 @@ public class Mario {
             dir_x = 1;
         }
 
+        // Gravity
         if (y < arena.getHeight() - h) {
             velocity_y += 1;
         } else {
             velocity_y = 0;
         }
 
+        // Jumping
         if (arena.upPressed() && velocity_y == 0 && old_velocity_y == velocity_y) {
             velocity_y = -20;
         }
 
-        move(dir_x * speed, velocity_y);
+        move(dir_x * SPEED, velocity_y);
 
         old_velocity_y = velocity_y;
     }
