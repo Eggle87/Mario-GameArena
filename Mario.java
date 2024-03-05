@@ -38,7 +38,7 @@ public class Mario {
         rects[0] = a;
     }
 
- /*Not in use currently
+
     public void addTo(GameArena arena) {
         for (int i = 0; i < rects.length; i++)
             arena.addRectangle(rects[i]);
@@ -52,6 +52,8 @@ public class Mario {
             rects[i].move(dx, dy);
     }
 
+
+    //All for movement
     public void update(GameArena arena) {
         int dir_x = 0;
         int dir_y = 0;
@@ -78,7 +80,7 @@ public class Mario {
 
         old_velocity_y = velocity_y;
     }
-     */
+
 
     //Draws mario image to screen
     public void draw(Graphics g2d) {
