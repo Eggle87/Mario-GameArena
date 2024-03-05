@@ -17,8 +17,6 @@ public class Main {
         {
             mario.update(arena);
 
-            mario.draw(g2d);
-
             arena.pause();
         }
     }

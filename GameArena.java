@@ -1,7 +1,10 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.*;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.*;
 import java.util.*;
 import java.lang.Class;
@@ -278,6 +281,13 @@ public class GameArena extends JPanel implements Runnable, KeyListener, MouseLis
 						graphics.fillRect((int)r.getXPosition(), (int)r.getYPosition(), (int)r.getWidth(), (int)r.getHeight());
 					}
 
+					if (o instanceof Sprite)
+					{
+						Sprite s = (Sprite) o;
+						
+						graphics.drawImage((BufferedImage)s.getImage(), (int)s.getXPosition(), (int)s.getYPosition(), (int)s.getWidth(), (int)s.getHeight(), null);
+					}
+
 					if (o instanceof Line)
 					{
 						Line l = (Line) o;
@@ -375,6 +385,9 @@ public class GameArena extends JPanel implements Runnable, KeyListener, MouseLis
 
 					if (obj instanceof Rectangle)
 						l = ((Rectangle)obj).getLayer();
+					
+					if (obj instanceof Sprite)
+						l = ((Sprite)obj).getLayer();
 
 					if (obj instanceof Line)
 						l = ((Line)obj).getLayer();
@@ -433,6 +446,17 @@ public class GameArena extends JPanel implements Runnable, KeyListener, MouseLis
 	}
 
 	/**
+	 * Adds a given Sprite to the GameArena.
+	 * Once a sprite is added, it will automatically appear on the window.
+	 *
+	 * @param r the sprite to add to the GameArena.
+	 */
+	public void addSprite(Sprite s)
+	{
+		this.addThing(s, s.getLayer());
+	}
+
+	/**
 	 * Adds a given Line to the GameArena.
 	 * Once a Line is added, it will automatically appear on the window.
 	 *
@@ -464,6 +488,17 @@ public class GameArena extends JPanel implements Runnable, KeyListener, MouseLis
 	public void removeRectangle(Rectangle r)
 	{
 		this.removeObject(r);
+	}
+
+	/**
+	 * Remove a Sprite from the GameArena.
+	 * Once a Sprite is removed, it will no longer appear on the window.
+	 *
+	 * @param r the sprite to remove from the GameArena.
+	 */
+	public void removeSprite(Sprite s)
+	{
+		this.removeObject(s);
 	}
 
 	/**
