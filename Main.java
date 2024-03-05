@@ -3,6 +3,7 @@ public class Main {
     public static void main(String[] args)
     {
         GameArena arena = new GameArena(500,500);
+        Graphics g2d = arena.getGraphics();
 
         Mario mario = new Mario(150, 0);
 
@@ -11,6 +12,8 @@ public class Main {
         while(true)
         {
             mario.update(arena);
+
+            mario.draw(g2d);
 
             arena.pause();
         }
