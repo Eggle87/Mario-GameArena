@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Mario {
+    //Declare variables
     private int x;
     private int y;
     private int w = 0;
@@ -30,9 +31,9 @@ public class Mario {
         try {
             marioImage = ImageIO.read(new File("Sprites/Mario_Left.png"));
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //if the png isnt found error
         }
-        
+        //idk i cant lie
         Rectangle a = new Rectangle(x, y, w, h, "RED");
         rects[0] = a;
     }
@@ -79,6 +80,7 @@ public class Mario {
     }
      */
 
+    //Draws mario image to screen
     public void draw(Graphics g2d) {
         g2d.drawImage(marioImage, x, y, null);
     }
