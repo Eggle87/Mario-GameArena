@@ -18,7 +18,7 @@ public class Main {
     }
     public static void Grid(GameArena arena)
     {
-        for(double i=0;i<500;i=i+50)
+        for(double i=0;i<=500;i=i+50)
         {
             Line gridLiney = new Line(i,0.0,i,500.0,1.0,"");
             arena.addLine(gridLiney);
