@@ -26,21 +26,23 @@ public class Mario {
         this.x = _x;
         this.y = _y;
 
+        //Get mario sprint png
         try {
             marioImage = ImageIO.read(new File("Sprites/Mario_Left.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        
         Rectangle a = new Rectangle(x, y, w, h, "RED");
         rects[0] = a;
     }
 
+ /*Not in use currently
     public void addTo(GameArena arena) {
         for (int i = 0; i < rects.length; i++)
             arena.addRectangle(rects[i]);
     }
-
+    
     public void move(int dx, int dy) {
         x = x + dx;
         y = y + dy;
@@ -75,6 +77,7 @@ public class Mario {
 
         old_velocity_y = velocity_y;
     }
+     */
 
     public void draw(Graphics g2d) {
         g2d.drawImage(marioImage, x, y, null);
