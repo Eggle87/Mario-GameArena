@@ -7,15 +7,17 @@ import javax.imageio.ImageIO;
 public class Mario {
     private int x;
     private int y;
-    private int w = 50;
-    private int h = 100;
+    private int w = 10;
+    private int h = 20;
+    private int GRAVITY = 1;
+    private int JUMP_SIZE = -10;
     private BufferedImage marioImage;
 
     int velocity_x = 0;
     int velocity_y = 0;
     int old_velocity_y = 0;
 
-    private int SPEED = 7;
+    private int SPEED = 2;
 
     // The sprites that comprise mario
     private Sprite[] sprites = new Sprite[1];
@@ -41,9 +43,11 @@ public class Mario {
             arena.addSprite(sprites[i]);
     }
     
-    public void move(int dx, int dy) {
+    public void move(int dx, int dy, GameArena arena) {
         x = x + dx;
         y = y + dy;
+
+        arena.graphics.translate(-dx, 0);
 
         for (int i = 0; i < sprites.length; i++)
         sprites[i].move(dx, dy);
@@ -58,23 +62,23 @@ public class Mario {
             dir_x = -1;
         }
 
-        if (arena.rightPressed() && x < arena.getWidth() - w) {
+        if (arena.rightPressed() && x < 10000000 - w) {
             dir_x = 1;
         }
 
         // Gravity
-        if (y < arena.getHeight() - h) {
-            velocity_y += 1;
+        if (y < arena.getHeight() - 32 - h) {
+            velocity_y += GRAVITY;
         } else {
             velocity_y = 0;
         }
 
         // Jumping
         if (arena.upPressed() && velocity_y == 0 && old_velocity_y == velocity_y) {
-            velocity_y = -20;
+            velocity_y = JUMP_SIZE;
         }
 
-        move(dir_x * SPEED, velocity_y);
+        move(dir_x * SPEED, velocity_y, arena);
 
         old_velocity_y = velocity_y;
     }
