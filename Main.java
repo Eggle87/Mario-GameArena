@@ -2,13 +2,15 @@ public class Main {
 
     public static void main(String[] args)
     {
-        GameArena arena = new GameArena(500,500);
+        GameArena arena = new GameArena(500,240);
 
         Mario mario = new Mario(150, 0);
 
         mario.addTo(arena);
 
         Grid(arena);
+
+        arena.setBackgroundImage("Sprites/Map.png");
 
         while(true)
         {
