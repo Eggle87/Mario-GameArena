@@ -41,9 +41,11 @@ public class Mario {
             arena.addSprite(sprites[i]);
     }
     
-    public void move(int dx, int dy) {
+    public void move(int dx, int dy, GameArena arena) {
         x = x + dx;
         y = y + dy;
+
+        arena.graphics.translate(-dx, 0);
 
         for (int i = 0; i < sprites.length; i++)
         sprites[i].move(dx, dy);
@@ -58,7 +60,7 @@ public class Mario {
             dir_x = -1;
         }
 
-        if (arena.rightPressed() && x < arena.getWidth() - w) {
+        if (arena.rightPressed() && x < 10000000 - w) {
             dir_x = 1;
         }
 
@@ -74,7 +76,7 @@ public class Mario {
             velocity_y = -20;
         }
 
-        move(dir_x * SPEED, velocity_y);
+        move(dir_x * SPEED, velocity_y, arena);
 
         old_velocity_y = velocity_y;
     }
