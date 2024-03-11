@@ -43,8 +43,11 @@ public class GameArena extends JPanel implements Runnable, KeyListener, MouseLis
 	private int mouseX = 0;
 	private int mouseY = 0;
 
+	public int width_ = 2000;
+	public int height_ = 720;
+
 	private BufferedImage buffer;
-	private Graphics2D graphics;
+	public Graphics2D graphics;
 	private Map<RenderingHints.Key, Object> renderingHints;
 	private boolean rendered = false;
 	private Image backgroundImage = null;
@@ -80,7 +83,7 @@ public class GameArena extends JPanel implements Runnable, KeyListener, MouseLis
 		if (createWindow)
 		{
 			this.frame = new JFrame();
-			frame.setTitle("Let's Play!");
+			frame.setTitle("Super Saad Bros™");
 			frame.setSize(width, height);
 			frame.setResizable(false);
 			frame.setBackground(Color.BLACK);
@@ -263,7 +266,7 @@ public class GameArena extends JPanel implements Runnable, KeyListener, MouseLis
 				graphics.clearRect(0,0, arenaWidth, arenaHeight);
 
 				if (backgroundImage != null)
-					graphics.drawImage(backgroundImage, 0, 0, arenaWidth, arenaHeight, 0, 0, backgroundImage.getWidth(null), backgroundImage.getHeight(null), null);
+					graphics.drawImage(backgroundImage, 0, 0, width_, height_, 0, 0, backgroundImage.getWidth(null), backgroundImage.getHeight(null), null);
 
 				for (Object o : things)
 				{
@@ -285,7 +288,7 @@ public class GameArena extends JPanel implements Runnable, KeyListener, MouseLis
 					{
 						Sprite s = (Sprite) o;
 						
-						graphics.drawImage((BufferedImage)s.getImage(), (int)s.getXPosition(), (int)s.getYPosition(), (int)s.getWidth(), (int)s.getHeight(), null);
+						graphics.drawImage((BufferedImage)s.getImage(), (int)s.getXPosition(), (int)s.getYPosition(), (int)s.getWidth(), (int)s.getHeight(),null);
 					}
 
 					if (o instanceof Line)
@@ -551,7 +554,7 @@ public class GameArena extends JPanel implements Runnable, KeyListener, MouseLis
 	 */
 	public void pause()
 	{
-		try { Thread.sleep(20); }
+		try { Thread.sleep(5); }
 		catch (Exception e) {};
 	}
 

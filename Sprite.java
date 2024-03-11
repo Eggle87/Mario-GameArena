@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
  * This class represents a Rectabgle object. When combined with the GameArena class,
  * instances of the Sprite class can be displayed on the screen.
  */
-public class Sprite 
+public class Sprite
 {
 	// The following instance variables define the
 	// information needed to represent a Sprite
@@ -20,6 +20,8 @@ public class Sprite
 	private int layer;				// The layer this Sprite is on.
 
 
+	public Sprite() {}	
+	
 	/**
 	 * Constructor. Creates a Sprite with the given parameters.
 	 * @param x The x co-ordinate position of top left corner of the Sprite (in pixels)
@@ -134,6 +136,15 @@ public class Sprite
 	public BufferedImage getImage()
 	{
 		return img;
+	}
+
+	/**
+	 * Obtains the image of this Sprite.
+	 * @return the image of this Sprite.
+	 */
+	public void setImage(BufferedImage i)
+	{
+		img = i;
 	}
 
 	/**
