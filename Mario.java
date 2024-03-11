@@ -113,24 +113,7 @@ public class Mario {
             timerframe = 0;
             timer.setText(Integer.toString(time--));
         }
-
-        for (int i = 0; i < tiles.tilesSize; i++) {
-            if (sprites[0].collides(tiles.tiles[i])) {
-                if (tiles.tiles[i].getXPosition() <= x && tiles.tiles[i].getYPosition() <= y + 16) {
-                    stop_x = -1;
-                }
-                if (tiles.tiles[i].getXPosition() >= x && tiles.tiles[i].getYPosition() <= y + 16) {
-                    stop_x = 1;
-                }
-                if (tiles.tiles[i].getYPosition() <= y) {
-                    stop_y = -1;
-                }
-                if (tiles.tiles[i].getYPosition() >= y) {
-                    stop_y = 1;
-                }
-            }
-        }
-
+        
         // Movement variables
         if (arena.leftPressed() && x > 0) {
             dir_x = -1;
@@ -138,6 +121,23 @@ public class Mario {
 
         if (arena.rightPressed() && x < 10000000 - w) {
             dir_x = 1;
+        }
+
+        for (int i = 0; i < tiles.tilesSize; i++) {
+            if (sprites[0].collides(tiles.tiles[i])) {
+                if (tiles.tiles[i].getXPosition() < x && tiles.tiles[i].getYPosition() < y + 16) {
+                    stop_x = -1;
+                }
+                if (tiles.tiles[i].getXPosition() > x && tiles.tiles[i].getYPosition() < y + 16) {
+                    stop_x = 1;
+                }
+                if (tiles.tiles[i].getYPosition() < y && tiles.tiles[i].getXPosition() < x + 8 && tiles.tiles[i].getXPosition() > x - 8) {
+                    stop_y = -1;
+                }
+                if (tiles.tiles[i].getYPosition() > y && tiles.tiles[i].getXPosition() < x + 8) {
+                    stop_y = 1;
+                }
+            }
         }
 
         velocity_y += GRAVITY;
