@@ -20,6 +20,7 @@ public class Mario {
     int animInt = 1;
     int animTimer = 0;
 
+    double accel = 0.02;
     double velocity_x = 0;
     double velocity_y = 0;
     double old_velocity_y = 0;
@@ -31,7 +32,7 @@ public class Mario {
 
     int coinsCollected_ = 0;
 
-    private double SPEED = 0.5;
+    private double SPEED = 0.6;
 
     // The sprites that comprise mario
     private Sprite[] sprites = new Sprite[1];
@@ -134,6 +135,16 @@ public class Mario {
                 if (tiles.tiles[i].getYPosition() > y && tiles.tiles[i].getXPosition() < x + 8) {
                     stop_y = 1;
                 }
+
+                for (int j = 0; j < tiles.getQuestionsSize(); j++) {
+                    if (tiles.tiles[i] == tiles.getQuestions()[j]) {
+                        if (stop_y == -1 && tiles.tiles[i].isCollected() == false) {
+                            tiles.setCollected(tiles.tiles[i]);
+                            coinsCollected_++;
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -144,7 +155,7 @@ public class Mario {
         }
 
         if (stop_y == -1) {
-            velocity_y = 1;
+            velocity_y = 0.1;
         }
 
         // Jumping
@@ -197,8 +208,24 @@ public class Mario {
             sprites[0].setImage(MarioImages[4]);
         }
 
+        if (dir_x == 1) {
+            velocity_x += accel;
+        }
+        else if (dir_x == -1) {
+            velocity_x -= accel;
+        }
+        else {
+            for (int i = 0; i < 2; i++) if (velocity_x > 0) velocity_x -= accel;
+            for (int i = 0; i < 2; i++) if (velocity_x < 0) velocity_x += accel;
+        }
+
+        if (velocity_x > SPEED) velocity_x = SPEED;
+        else if (velocity_x < -SPEED) velocity_x = -SPEED;
+
+        if (Math.abs(velocity_x) < 0.02) velocity_x = 0;
+
         //Acc move them innit
-        move(dir_x * SPEED, velocity_y, arena, stop_x, stop_y, timer, coinsCollected);
+        move(velocity_x, velocity_y, arena, stop_x, stop_y, timer, coinsCollected);
 
         old_velocity_y = velocity_y;
         
@@ -215,7 +242,11 @@ public class Mario {
             }
         }
 
-        for (int i = 0; i < coins.length; i++) {
+        if ((y > 260) || (x > 3400)) {
+            collided = 1;
+        }
+
+        for (int i = 0; i < tiles.getCoinsSize(); i++) {
             if (sprites[0].collides(coins[i].sprites[0])) {
                 coins[i].move(500000, 0, arena);
                 coinsCollected_++;
