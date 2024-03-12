@@ -288,7 +288,7 @@ public class GameArena extends JPanel implements Runnable, KeyListener, MouseLis
 					{
 						Sprite s = (Sprite) o;
 						
-						graphics.drawImage((BufferedImage)s.getImage(), (int)s.getXPosition(), (int)s.getYPosition(), (int)s.getWidth(), (int)s.getHeight(),null);
+						graphics.drawImage((BufferedImage)s.getImage(), (int)s.getXPosition(), (int)s.getYPosition(), (int)s.getWidth(), (int)s.getHeight(), null);
 					}
 
 					if (o instanceof Line)
