@@ -17,6 +17,7 @@ public class Tiles extends Sprite{
     static BufferedImage tileImage;
     static BufferedImage PipeImage;
     static BufferedImage blockImage;
+    static BufferedImage brickImage;
     static BufferedImage[] QuestionImage = new BufferedImage[4];
     public static Sprite[] tiles = new Sprite[10000];
     public static Sprite[] questionblocks = new Sprite[10000];
@@ -38,6 +39,12 @@ public class Tiles extends Sprite{
 
         try {
             blockImage = ImageIO.read(new File("Sprites/block.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            brickImage = ImageIO.read(new File("Sprites/brick.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -100,18 +107,16 @@ public class Tiles extends Sprite{
 
     public static void addTileArray() // Tilearray should go (column,blocktype) 1=Standard brick, 2=Lucky block
     {
-
-            // TODO: ADD PITFALLS
         String layer1 =   "                                                                                                                                                                                                                    ";
         String layer2 =   "                                                                                                                                                                                                                    ";
         String layer3 =   "                                                                                                                                                                                                                    ";
         String layer4 =   "                                                                                                                                                                                                                    ";
         String layer5 =   "                                                                                                                                                                                                                    ";
-        String layer6 =   "                      ?                                                         ########   ###?              ?           ###    #??#                                                        □□                      ";
+        String layer6 =   "                      ?                                                         TTTTTTTT   TTT?              ?           TTT    T??T                                                        □□                      ";
         String layer7 =   "                                                                                                                                                                                           □□□                      ";
         String layer8 =   "                                                                                                                                                                                          □□□□                      ";
         String layer9 =   "                                                                                                                                                                                         □□□□□                      ";
-        String layer10 =  "                ?   #?#?#                                                    #?#              #     #     ?  ?  ?     #          ##      □  □          □□  □            ##?#            □□□□□□                      ";
+        String layer10 =  "                ?   T?T?T                                                    T?T              T     T     ?  ?  ?     T          TT      □  □          □□  □            TT?T            □□□□□□                      ";
         String layer11 =  "                                                                                                                                        □□  □□        □□□  □□                          □□□□□□□                      ";
         String layer12 =  "                                                                                                                                       □□□  □□□      □□□□  □□□                        □□□□□□□□                      ";
         String layer13 =  "                                                                                                                                      □□□□  □□□□    □□□□□  □□□□                      □□□□□□□□□        □             ";
@@ -132,6 +137,9 @@ public class Tiles extends Sprite{
                 }
                 else if (layers[x].charAt(i) == '□') {
                     addTile(i,x,16.0,16.0, blockImage);
+                }
+                else if (layers[x].charAt(i) == 'T') {
+                    addTile(i,x,16.0,16.0, brickImage);
                 }
             }
         }
