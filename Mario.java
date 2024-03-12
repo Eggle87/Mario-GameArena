@@ -4,9 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-
-
-
 public class Mario {
 
     //Declare Variables
@@ -16,8 +13,6 @@ public class Mario {
     private int h = 20;
     private double GRAVITY = 0.07;
     private double JUMP_SIZE = -3.2;
-
-
 
     public int collided=0;
 
@@ -131,7 +126,7 @@ public class Mario {
                 if (tiles.tiles[i].getXPosition() > x && tiles.tiles[i].getYPosition() < y + 16) {
                     stop_x = 1;
                 }
-                if (tiles.tiles[i].getYPosition() < y && tiles.tiles[i].getXPosition() < x + 8 && tiles.tiles[i].getXPosition() > x - 8) {
+                if (tiles.tiles[i].getYPosition() < y && tiles.tiles[i].getXPosition() < x + 8) {
                     stop_y = -1;
                 }
                 if (tiles.tiles[i].getYPosition() > y && tiles.tiles[i].getXPosition() < x + 8) {
@@ -144,6 +139,10 @@ public class Mario {
 
         if (stop_y == 1) {
             velocity_y = 0;
+        }
+
+        if (stop_y == -1) {
+            velocity_y = 1;
         }
 
         // Jumping
