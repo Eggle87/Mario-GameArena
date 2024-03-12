@@ -17,6 +17,9 @@ public class Sprite
 	private double width;				// The width of this Sprite
 	private double height;				// The height of this Sprite
 	private BufferedImage img;
+	private BufferedImage[] imgArray;
+	private int frame = 0;
+	private int timer = 0;
 	private int layer;				// The layer this Sprite is on.
 
 
@@ -37,6 +40,23 @@ public class Sprite
 		this.height = h;
 		this.img = i;
 		this.layer = 0;
+	}
+
+	/**
+	 * Constructor. Creates a Sprite with the given parameters.
+	 * @param x The x co-ordinate position of top left corner of the Sprite (in pixels)
+	 * @param y The y co-ordinate position of top left corner of the Sprite (in pixels)
+	 * @param w The width of the Sprite (in pixels)
+	 * @param h The height of the Sprite (in pixels)
+	 */
+	public Sprite(double x, double y, double w, double h, BufferedImage[] i)
+	{
+		this.xPosition = x;
+		this.yPosition = y;
+		this.width = w;
+		this.height = h;
+		this.imgArray = i;
+		this.layer = 0;
 	}	
 									
 	/**
@@ -55,7 +75,24 @@ public class Sprite
 		this.height = h;
 		this.img = i;
 		this.layer = layer;
-	}	
+	}
+
+	public void animate() {
+		timer++;
+		if (timer == 25) {
+			timer = 0;
+			if (frame == 0) {
+				timer = -50;
+			}
+			
+			img = imgArray[frame];
+			frame++;
+
+			if (frame > imgArray.length - 1) {
+				frame = 0;
+			}
+		}
+	}
 			
 	/**
 	 * Obtains the current position of this Sprite.
