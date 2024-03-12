@@ -209,7 +209,7 @@ public class Mario {
                     velocity_y = JUMP_SIZE / 2;
                 }
                 else {
-                    move(-x, -y, arena, 0, 0, timer, coinsCollected);
+                    arena.graphics.translate(x - 400, 0);
                     collided=1;
                 }
             }

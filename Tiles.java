@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class Tiles extends Sprite{
+public class Tiles {
     static BufferedImage tileImage;
     static BufferedImage PipeImage;
     static BufferedImage blockImage;
@@ -105,7 +105,7 @@ public class Tiles extends Sprite{
         }
     }
 
-    public static void addTileArray() // Tilearray should go (column,blocktype) 1=Standard brick, 2=Lucky block
+    public static void addTileArray()
     {
         String layer1 =   "                                                                                                                                                                                                                    ";
         String layer2 =   "                                                                                                                                                                                                                    ";
