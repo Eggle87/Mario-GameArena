@@ -35,7 +35,7 @@ public class Mario {
 
     // The sprites that comprise mario
     private Sprite[] sprites = new Sprite[1];
-    private BufferedImage MarioImages[] = new BufferedImage[9]; 
+    private BufferedImage MarioImages[] = new BufferedImage[9];
     private BufferedImage plc;
 
     public Mario(int _x, int _y) {
@@ -71,7 +71,7 @@ public class Mario {
         }
         if (stop_x == 1 && dx > 0) {
             dx = 0;
-        }
+        } 
         if (stop_y == -1 && dy < 0) {
             dy = 0;
         }
@@ -84,9 +84,11 @@ public class Mario {
         y = y + dy;
 
         //Translate the x value in to the sprite location
-        arena.graphics.translate(-dx, 0);
-        timer.setXPosition(x - 148);
-        coinsCollected.setXPosition(x + 500);
+        if (x > 160 && x < 2880) {
+            arena.graphics.translate(-dx, 0);
+            timer.setXPosition(x - 148);
+            coinsCollected.setXPosition(x + 500);
+        }
 
         //Move all mario sprites(idfk how move works i cant lie to you joe is very smart)
         for (int i = 0; i < sprites.length; i++)
@@ -201,12 +203,13 @@ public class Mario {
         old_velocity_y = velocity_y;
         
         for (int i = 0; i < goombas.length; i++) {
-            if (sprites[0].collides(goombas[i].sprites[0])) {
-                if (y < goombas[i].getYposition()) {
-                    goombas[i].move(0, 10000, arena, 0, 0);
+            if (sprites[0].collides(goombas[i].sprites[0]) && goombas[i].isDead() == false) {
+                if (y + 8 < goombas[i].getYposition()) {
+                    goombas[i].die();
                     velocity_y = JUMP_SIZE / 2;
                 }
                 else {
+                    move(-x, -y, arena, 0, 0, timer, coinsCollected);
                     collided=1;
                 }
             }

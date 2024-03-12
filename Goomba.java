@@ -12,7 +12,16 @@ public class Goomba
     private int h = 20;
     private double SPEED = 0.25;
     private double GRAVITY = 0.1;
-    private BufferedImage goombaImage;
+    
+    public Sprite[] sprites = new Sprite[1];
+    private BufferedImage goombaImages[] = new BufferedImage[4];
+    private BufferedImage plc;
+    int walkAnim[] = {1, 2};
+    int animInt = 1;
+    int animTimer = 0;
+
+    int deathTimer = 0;
+    boolean dead = false;
 
     int velocity_x = 0;
     double velocity_y = 0;
@@ -20,22 +29,22 @@ public class Goomba
 
     //1 going right, -1 for going left
     int direction = 1;
-
-    public Sprite[] sprites = new Sprite[1];
-
+    
     public Goomba(int _x, int _y)
     {
         this.x = _x;
         this.y = _y;
 
-
-        try {
-            goombaImage = ImageIO.read(new File("Sprites/goomba2.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (int i = 0; i <= 3; i++) {
+            try {
+                plc = ImageIO.read(new File("Sprites/goomba/"+Integer.toString(i)+".png"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            goombaImages[i] = plc;
         }
 
-        Sprite s = new Sprite(x, y, w, h, goombaImage);
+        Sprite s = new Sprite(x, y, w, h, goombaImages[0]);
         sprites[0] = s;
     }
 
@@ -70,39 +79,70 @@ public class Goomba
 
     public void update(GameArena arena, Tiles tiles)
     {
-        int stop_x = 0;
-        int stop_y = 0;
-
-        for (int i = 0; i < tiles.tilesSize; i++) {
-            if (sprites[0].collides(tiles.tiles[i])) {
-                if (tiles.tiles[i].getXPosition() <= x && tiles.tiles[i].getYPosition() <= y + 16) {
-                    stop_x = -1;
-                    direction = -direction;
-                }
-                if (tiles.tiles[i].getXPosition() >= x && tiles.tiles[i].getYPosition() <= y + 16) {
-                    stop_x = 1;
-                    direction = -direction;
-                }
-                if (tiles.tiles[i].getYPosition() <= y) {
-                    stop_y = -1;
-                }
-                if (tiles.tiles[i].getYPosition() >= y) {
-                    stop_y = 1;
+        if (dead == false) {
+            animTimer++;
+            if (animTimer > 100) {
+                animTimer = 0;
+                animInt++;
+                if (animInt > 2) {
+                    animInt = 1;
                 }
             }
-        }
-        
-        // Gravity
-        if (y < arena.getHeight() / 3 - 32 - h) {
+
+            sprites[0].setImage(goombaImages[animInt]);
+
+            int stop_x = 0;
+            int stop_y = 0;
+
+            for (int i = 0; i < tiles.tilesSize; i++) {
+                if (sprites[0].collides(tiles.tiles[i])) {
+                    if (tiles.tiles[i].getXPosition() <= x && tiles.tiles[i].getYPosition() <= y + 16) {
+                        stop_x = -1;
+                        direction = -direction;
+                    }
+                    if (tiles.tiles[i].getXPosition() >= x && tiles.tiles[i].getYPosition() <= y + 16) {
+                        stop_x = 1;
+                        direction = -direction;
+                    }
+                    if (tiles.tiles[i].getYPosition() <= y) {
+                        stop_y = -1;
+                    }
+                    if (tiles.tiles[i].getYPosition() >= y) {
+                        stop_y = 1;
+                    }
+                }
+            }
+            
             velocity_y += GRAVITY;
-        } else {
-            velocity_y = 0;
+
+            if (stop_y == 1) {
+                velocity_y = 0;
+            }
+
+            if (stop_y == -1) {
+                velocity_y = 1;
+            }
+            
+            move(direction * SPEED, velocity_y, arena, stop_x, stop_y);
         }
-        
-        move(direction * SPEED, velocity_y, arena, stop_x, stop_y);
+        else {
+            deathTimer++;
+            if (deathTimer == 100) {
+                move(0, 1000, arena, 0, 0);
+            }
+        }
     }
 
     public double getYposition() {
         return y;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void die() {
+        dead = true;
+        sprites[0].setImage(goombaImages[3]);
     }
 }
