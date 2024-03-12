@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 public class Tiles extends Sprite{
     static BufferedImage tileImage;
     static BufferedImage PipeImage;
+    static BufferedImage blockImage;
     static BufferedImage[] QuestionImage = new BufferedImage[4];
     public static Sprite[] tiles = new Sprite[10000];
     public static Sprite[] questionblocks = new Sprite[10000];
@@ -31,6 +32,12 @@ public class Tiles extends Sprite{
 
         try {
             PipeImage = ImageIO.read(new File("Sprites/pipe2.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            blockImage = ImageIO.read(new File("Sprites/block.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,8 +63,8 @@ public class Tiles extends Sprite{
     }
 
     // Creates a new tile
-    public static void addTile(double x, double y, double w, double h) {
-        Sprite tile = new Sprite(x * w, y * h, w, h, tileImage);
+    public static void addTile(double x, double y, double w, double h, BufferedImage i) {
+        Sprite tile = new Sprite(x * w, y * h, w, h, i);
         tiles[tilesSize] = tile;
         tilesSize++;
     }
@@ -108,8 +115,8 @@ public class Tiles extends Sprite{
         String layer11 =  "                                                                                                                                        □□  □□        □□□  □□                          □□□□□□□                      ";
         String layer12 =  "                                                                                                                                       □□□  □□□      □□□□  □□□                        □□□□□□□□                      ";
         String layer13 =  "                                                                                                                                      □□□□  □□□□    □□□□□  □□□□                      □□□□□□□□□        □             ";
-        String layer14 =  "####################################################################################################################################################################################################################";
-        String layer15 =  "####################################################################################################################################################################################################################";
+        String layer14 =  "#####################################################################  ###############   ################################################################  #########################################################";
+        String layer15 =  "#####################################################################  ###############   ################################################################  #########################################################";
 
         String[] layers = {layer1,layer2,layer3,layer4,layer5,layer6,layer7,layer8,layer9,layer10,layer11,layer12,layer13,layer14,layer15};
 
@@ -117,13 +124,15 @@ public class Tiles extends Sprite{
         {
             for (int i=1;i<211;i++)
             {
-                if ((layers[x].charAt(i) == '#') || (layers[x].charAt(i) == '□') ){
-                    addTile(i,x,16.0,16.0);
+                if (layers[x].charAt(i) == '#') {
+                    addTile(i,x,16.0,16.0, tileImage);
                 }
                 else if (layers[x].charAt(i) == '?') {
                     addQuestion(i,x,16.0,16.0);
                 }
-
+                else if (layers[x].charAt(i) == '□') {
+                    addTile(i,x,16.0,16.0, blockImage);
+                }
             }
         }
 

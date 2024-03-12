@@ -10,7 +10,7 @@ public class Main {
         Goomba goomba3 = new Goomba(880, 180);
         Coin coin = new Coin(400, 80);
         Text timer = new Text(" ", 20, 0.0,20.0,"WHITE");
-        Text coinsCollected = new Text(" ", 20, 0.0,20.0,"WHITE");
+        Text coinsCollected = new Text(" ", 16, 0.0,20.0,"WHITE");
         
         arena.setBackgroundImage("Sprites/mario_title-screen.png");
         while(true) {
