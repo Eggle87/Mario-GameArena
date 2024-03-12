@@ -25,29 +25,26 @@ public class Main {
         arena.height_ = 240;
         
         Goomba goombas[] = new Goomba[3];
-        Coin coins[] = new Coin[1];
 
         goombas[0] = goomba1;
         goombas[1] = goomba2;
         goombas[2] = goomba3;
-        coins[0] = coin;
 
         mario.addTo(arena);
         tiles.addTo(arena);
         arena.addText(timer);
         arena.addText(coinsCollected);
 
+        tiles.addCoins(arena);
+
         for (int i = 0; i < goombas.length; i++)
             goombas[i].addTo(arena);
-        
-        for (int i = 0; i < coins.length; i++)
-            coins[i].addTo(arena);
 
         arena.graphics.scale(3, 3);
 
         while(true)
         {
-            mario.update(arena, goombas, tiles, timer, coins, coinsCollected);
+            mario.update(arena, goombas, tiles, timer, tiles.getCoins(), coinsCollected);
             tiles.update(arena);
             for (int i = 0; i < goombas.length; i++)
                 goombas[i].update(arena, tiles);
@@ -59,6 +56,8 @@ public class Main {
                 arena.setBackgroundImage("Sprites/endingscreen.png");
                 return;
             }
+
+            //if (mario.)
             
             arena.pause();
         }
