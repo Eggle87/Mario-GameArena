@@ -8,8 +8,8 @@ public class Coin
 {
     private double x;
     private double y;
-    private int w = 20;
-    private int h = 20;
+    private int w = 16;
+    private int h = 16;
     private double SPEED = 0.25;
     private double GRAVITY = 0.1;
     private BufferedImage goombaImage;
@@ -23,7 +23,7 @@ public class Coin
 
     public Sprite[] sprites = new Sprite[1];
 
-    public Coin(int _x, int _y)
+    public Coin(double _x, double _y)
     {
         this.x = _x;
         this.y = _y;
