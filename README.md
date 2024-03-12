@@ -1,5 +1,6 @@
 # Mario-GameArena
 Re-Creation of the first mario level utilising the GameArena assets from Joe Finney
+![image](https://github.com/Eggle87/Mario-GameArena/assets/29758289/283c4485-10a7-409f-bd92-dec5341b7d7e)
 
 
 Contributers: Niall Denton, George Sproat, Rizvan Faisal
