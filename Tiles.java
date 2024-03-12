@@ -50,7 +50,6 @@ public class Tiles {
         }
 
         for (int i = 0; i < 4; i++) {
-            System.out.println("Sprites/questionblock/"+Integer.toString(i)+".png");
             try {
                 QuestionImage[i] = ImageIO.read(new File("Sprites/questionblock/"+Integer.toString(i)+".png"));
             } catch (IOException e) {
