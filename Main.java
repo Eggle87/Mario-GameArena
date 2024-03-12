@@ -8,7 +8,7 @@ public class Main {
         Goomba goomba1 = new Goomba(400, 180);
         Goomba goomba2 = new Goomba(800, 180);
         Goomba goomba3 = new Goomba(880, 180);
-        Coin coin = new Coin(352, 80);
+        Coin coin = new Coin(400, 80);
         Text timer = new Text(" ", 20, 0.0,20.0,"WHITE");
         Text coinsCollected = new Text(" ", 20, 0.0,20.0,"WHITE");
         
@@ -48,6 +48,7 @@ public class Main {
         while(true)
         {
             mario.update(arena, goombas, tiles, timer, coins, coinsCollected);
+            tiles.update(arena);
             for (int i = 0; i < goombas.length; i++)
                 goombas[i].update(arena, tiles);
 
