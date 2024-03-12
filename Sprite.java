@@ -1,218 +1,185 @@
+import java.awt.BorderLayout;
+import java.awt.Image;
+import java.awt.List;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 
-/**
- * Models a simple, solid rectangle. 
- * This class represents a Rectabgle object. When combined with the GameArena class,
- * instances of the Sprite class can be displayed on the screen.
- */
-public class Sprite
-{
-	// The following instance variables define the
-	// information needed to represent a Sprite
-	// Feel free to more instance variables if you think it will 
-	// support your work... 
-	
-	private double xPosition;			// The X coordinate of this Sprite
-	private double yPosition;			// The Y coordinate of this Sprite
-	private double width;				// The width of this Sprite
-	private double height;				// The height of this Sprite
-	private BufferedImage img;
-	private BufferedImage[] imgArray;
-	private int frame = 0;
-	private int timer = 0;
-	private int layer;				// The layer this Sprite is on.
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
+public class Tiles {
+    static BufferedImage tileImage;
+    static BufferedImage PipeImage;
+    static BufferedImage blockImage;
+    static BufferedImage brickImage;
+    public static BufferedImage[] QuestionImage = new BufferedImage[4];
+    public static Sprite[] tiles = new Sprite[10000];
+    public static Sprite[] questionblocks = new Sprite[10000];
+    static int tilesSize = 0;
+    static int questionsSize = 0;
 
-	public Sprite() {}	
-	
-	/**
-	 * Constructor. Creates a Sprite with the given parameters.
-	 * @param x The x co-ordinate position of top left corner of the Sprite (in pixels)
-	 * @param y The y co-ordinate position of top left corner of the Sprite (in pixels)
-	 * @param w The width of the Sprite (in pixels)
-	 * @param h The height of the Sprite (in pixels)
-	 */
-	public Sprite(double x, double y, double w, double h, BufferedImage i)
-	{
-		this.xPosition = x;
-		this.yPosition = y;
-		this.width = w;
-		this.height = h;
-		this.img = i;
-		this.layer = 0;
-	}
+    static Coin coins[] = new Coin[1000];
+    static int coinsSize = 0;
 
-	/**
-	 * Constructor. Creates a Sprite with the given parameters.
-	 * @param x The x co-ordinate position of top left corner of the Sprite (in pixels)
-	 * @param y The y co-ordinate position of top left corner of the Sprite (in pixels)
-	 * @param w The width of the Sprite (in pixels)
-	 * @param h The height of the Sprite (in pixels)
-	 */
-	public Sprite(double x, double y, double w, double h, BufferedImage[] i)
-	{
-		this.xPosition = x;
-		this.yPosition = y;
-		this.width = w;
-		this.height = h;
-		this.imgArray = i;
-		this.layer = 0;
-	}	
-									
-	/**
-	 * Constructor. Creates a Sprite with the given parameters.
-	 * @param x The x co-ordinate position of top left corner of the Sprite (in pixels)
-	 * @param y The y co-ordinate position of top left corner of the Sprite (in pixels)
-	 * @param w The width of the Sprite (in pixels)
-	 * @param h The height of the Sprite (in pixels)
-	 * @param layer The layer this Sprite is to be drawn on. Objects with a higher layer number are always drawn on top of those with lower layer numbers.
-	 */
-	public Sprite(double x, double y, double w, double h, BufferedImage i, int layer)
-	{
-		this.xPosition = x;
-		this.yPosition = y;
-		this.width = w;
-		this.height = h;
-		this.img = i;
-		this.layer = layer;
-	}
+    public Tiles() {
+        try {
+            tileImage = ImageIO.read(new File("Sprites/tile.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	public void animate() {
-		timer++;
-		if (timer == 25) {
-			timer = 0;
-			if (frame == 0) {
-				timer = -50;
-			}
-			
-			img = imgArray[frame];
-			frame++;
+        try {
+            PipeImage = ImageIO.read(new File("Sprites/pipe2.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-			if (frame > imgArray.length - 1) {
-				frame = 0;
-			}
-		}
-	}
-			
-	/**
-	 * Obtains the current position of this Sprite.
-	 * @return the X coordinate of this Sprite within the GameArena.
-	 */
-	public double getXPosition()
-	{
-		return xPosition;
-	}
+        try {
+            blockImage = ImageIO.read(new File("Sprites/block.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	/**
-	 * Obtains the current position of this Sprite.
-	 * @return the Y coordinate of this Sprite within the GameArena.
-	 */
-	public double getYPosition()
-	{
-		return yPosition;
-	}
+        try {
+            brickImage = ImageIO.read(new File("Sprites/brick.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	/**
-	 * Moves the current position of this Sprite to the given X co-ordinate
-	 * @param x the new x co-ordinate of this Sprite
-	 */
-	public void setXPosition(double x)
-	{
-		this.xPosition = x;
-	}
+        for (int i = 0; i < 4; i++) {
+            try {
+                QuestionImage[i] = ImageIO.read(new File("Sprites/questionblock/"+Integer.toString(i)+".png"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-	/**
-	 * Moves the current position of this Sprite to the given Y co-ordinate
-	 * @param y the new y co-ordinate of this Sprite
-	 */
-	public void setYPosition(double y)
-	{
-		this.yPosition = y;
-	}
+        addPipe(450,180,32.0,100.0);
 
-	/**
-	 * Obtains the width of this Sprite.
-	 * @return the width of this Sprite,in pixels.
-	 */
-	public double getWidth()
-	{
-		return width;
-	}
+        addPipe(610,166,32.0,100.0);
 
-	/**
-	 * Sets the width of this Sprite to the given value
-	 * @param w the new width of this Sprite, in pixels.
-	 */
-	public void setWidth(double w)
-	{
-		width = w;
-	}
+        addPipe(736,150,32.0,100.0);
 
-	/**
-	 * Obtains the height of this Sprite.
-	 * @return the height of this Sprite,in pixels.
-	 */
-	public double getHeight()
-	{
-		return height;
-	}
+        addPipe(916,150,32.0,100.0);
 
-	/**
-	 * Sets the height of this Sprite to the given value
-	 * @param h the new height of this Sprite, in pixels.
-	 */
-	public void setHeight(double h)
-	{
-		height = h;
-	}
+        addTileArray();
+    }
 
-	/**
-	 * Obtains the image of this Sprite.
-	 * @return the image of this Sprite.
-	 */
-	public BufferedImage getImage()
-	{
-		return img;
-	}
+    // Creates a new tile
+    public static void addTile(double x, double y, double w, double h, BufferedImage i) {
+        Sprite tile = new Sprite(x * w, y * h, w, h, i);
+        tiles[tilesSize] = tile;
+        tilesSize++;
+    }
 
-	/**
-	 * Obtains the image of this Sprite.
-	 * @return the image of this Sprite.
-	 */
-	public void setImage(BufferedImage i)
-	{
-		img = i;
-	}
+    // Creates a new tile
+    public static void addPipe(double x, double y, double w, double h) {
+        Sprite tile = new Sprite(x, y, w, h, PipeImage);
+        tiles[tilesSize] = tile;
+        tilesSize++;
+    }
 
-	/**
-	 * Obtains the layer of this Sprite.
-	 * @return the layer of this Sprite.
-	 */
-	public int getLayer()
-	{
-		return layer;
-	}
+    // Creates a new question mark
+    public static void addQuestion(double x, double y, double w, double h) {
+        Sprite tile = new Sprite(x * w, y * h, w, h, QuestionImage);
+        tiles[tilesSize] = tile;
+        tilesSize++;
+        questionblocks[questionsSize] = tile;
+        questionsSize++;
+    }
 
-	/**
-	 * Moves this Sprite by the given amount.
-	 * 
-	 * @param dx the distance to move on the x axis (in pixels)
-	 * @param dy the distance to move on the y axis (in pixels)
-	 */
-	public void move(double dx, double dy)
-	{
-		xPosition += dx;
-		yPosition += dy;
-	}
+    public static void addCoin(double x, double y, double w, double h) {
+        Coin coin = new Coin(x * w, y * h);
+        coins[coinsSize] = coin;
+        coinsSize++;
+    }
 
-	/**
-	 * Determines if this Sprite is overlapping the given rectangle.
-	 * 
-	 * @param r the rectangle to test for collision
-	 * @return true of this rectangle is overlapping the rectangle r, false otherwise.
-	 */
-	public boolean collides(Sprite r)
-	{
-		return (xPosition + width > r.xPosition && xPosition < r.xPosition + r.width) && (yPosition + height > r.yPosition && yPosition < r.yPosition + r.height);
-	}
+    // Adds the sprites to the GameArena
+    public void addTo(GameArena arena) {
+        for (int i = 0; i < tilesSize; i++)
+            arena.addSprite(tiles[i]);
+    }
+
+    // Updates every frame
+    public void update(GameArena arena) {
+        for (int i = 0; i < questionsSize; i++) {
+            questionblocks[i].animate();
+        }
+    }
+
+    public static void addTileArray()
+    {
+        String layer1 =   "                                                                                                                                                                                                                   ";
+        String layer2 =   "                                                                                                                                                                                                                   ";
+        String layer3 =   "                                                                                                                             cc                                                                                    ";
+        String layer4 =   "                                                                                         c                                  c                                                                                      ";
+        String layer5 =   "                                                                                                                                                                                                                   ";
+        String layer6 =   "                      ?                                                       c TTTTTTTT   TTT?             c?c          TTT    T??T                                                       □□                      ";
+        String layer7 =   "                                                 c  c  c                     c c                                                                         c              c  c              □□□                      ";
+        String layer8 =   "                                         c                                    c                                                                                                          □□□□                      ";
+        String layer9 =   "                                c  c                                                                                                                                                    □□□□□                      ";
+        String layer10 =  "                ?   T?T?T                                                    T?T              T     T     ?cc?cc?     T          TT      □  □          □□  □            TT?T           □□□□□□                      ";
+        String layer11 =  "                                                                                                                                        □□  □□        □□□  □□                         □□□□□□□                      ";
+        String layer12 =  "                                                                                                                                       □□□  □□□      □□□□  □□□                       □□□□□□□□                      ";
+        String layer13 =  "                                                                                                                                      □□□□  □□□□    □□□□□  □□□□                     □□□□□□□□□        □             ";
+        String layer14 =  "#####################################################################  ###############   ################################################################  ########################################################";
+        String layer15 =  "#####################################################################  ###############   ################################################################  ########################################################";
+
+        String[] layers = {layer1,layer2,layer3,layer4,layer5,layer6,layer7,layer8,layer9,layer10,layer11,layer12,layer13,layer14,layer15};
+
+        for (int x=0;x<15;x++)
+        {
+            for (int i=0;i<211;i++)
+            {
+                if (layers[x].charAt(i) == '#') {
+                    addTile(i,x,16.0,16.0, tileImage);
+                }
+                else if (layers[x].charAt(i) == '?') {
+                    addQuestion(i,x,16.0,16.0);
+                }
+                else if (layers[x].charAt(i) == '□') {
+                    addTile(i,x,16.0,16.0, blockImage);
+                }
+                else if (layers[x].charAt(i) == 'T') {
+                    addTile(i,x,16.0,16.0, brickImage);
+                }
+                else if (layers[x].charAt(i) == 'c') {
+                    addCoin(i, x, 16, 16);
+                }
+            }
+        }
+
+    }
+
+    public Coin[] getCoins() {
+        return coins;
+    }
+
+    public int getCoinsSize() {
+        return coinsSize;
+    }
+
+    public Sprite[] getQuestions() {
+        return questionblocks;
+    }
+
+    public int getQuestionsSize() {
+        return questionsSize;
+    }
+
+    public void addCoins(GameArena arena) {
+        for (int i = 0; i < coinsSize; i++)
+            coins[i].addTo(arena); 
+    }
+
+    public void setCollected(Sprite s) {
+        s.setCollected();
+    }
 }
+
