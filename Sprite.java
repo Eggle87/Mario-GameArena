@@ -90,13 +90,13 @@ public class Sprite
 				img = imgArray[frame];
 				frame++;
 
-				if (frame > imgArray.length - 1) {
+				if (frame > imgArray.length - 2) {
 					frame = 0;
 				}
 			}
 		}
 		else {
-			img = imgArray[3];
+			img = imgArray[4];
 		}
 	}
 			
