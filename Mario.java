@@ -244,7 +244,7 @@ public class Mario {
         }
 
         if (y > 260) {
-            collided = 1;
+            collided = 3;
             arena.graphics.translate(x - 80, 0);
         }
 
