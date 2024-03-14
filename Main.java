@@ -76,6 +76,14 @@ public class Main {
                 arena.setBackgroundImage("Sprites/screens/WinScreen.png");
                 return;
             }
+            else if (mario.collided == 3) {
+                arena.graphics.scale(0.333333, 0.3333333);
+                arena.clearGameArena();
+                arena.width_ = 800;
+                arena.height_ = 720;
+                arena.setBackgroundImage("Sprites/FELLTOYOURDEATHLOL.png");
+                return;
+            }
             
             arena.pause();
         }
