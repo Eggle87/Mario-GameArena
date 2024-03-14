@@ -1,18 +1,22 @@
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 public class Main {
+    private static BufferedImage coinImage;
     
     public static void main(String[] args)
     {
-        GameArena arena = new GameArena(2000,720);
-        Mario mario = new Mario(150, 0);
+        GameArena arena = new GameArena(800,720);
+        Mario mario = new Mario(32, 0);
         Tiles tiles = new Tiles();
-        Goomba goomba1 = new Goomba(400, 180);
-        Goomba goomba2 = new Goomba(800, 180);
-        Goomba goomba3 = new Goomba(880, 180);
-        Coin coin = new Coin(400, 80);
-        Text timer = new Text(" ", 20, 0.0,20.0,"WHITE");
-        Text coinsCollected = new Text(" ", 16, 0.0,20.0,"WHITE");
         
-        arena.setBackgroundImage("Sprites/mario_title-screen.png");
+        arena.width_ = 800;
+        arena.height_ = 720;
+
+        arena.setBackgroundImage("Sprites/screens/StartingScreen.png");
         while(true) {
             arena.pause();
             if (arena.spacePressed()) {
@@ -21,43 +25,57 @@ public class Main {
         };
         arena.setBackgroundImage("Sprites/Map.png");
 
+        Text timer = new Text(" ", 16, 5000000,15.0,"WHITE");
+        Text coinsCollected = new Text(" ", 16, 2500000.0,15.0,"WHITE");
+        
+        try {
+            coinImage = ImageIO.read(new File("Sprites/coin.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Sprite coinSprite = new Sprite(200000, 2, 16, 16, coinImage);
+
         arena.width_ = 3376;
         arena.height_ = 240;
+        arena.graphics.scale(3, 3);
         
-        Goomba goombas[] = new Goomba[3];
-
-        goombas[0] = goomba1;
-        goombas[1] = goomba2;
-        goombas[2] = goomba3;
+        Goomba goombas[] = new Goomba[10000]; 
+        goombas = tiles.returnGoombas();
 
         mario.addTo(arena);
         tiles.addTo(arena);
         arena.addText(timer);
         arena.addText(coinsCollected);
-
         tiles.addCoins(arena);
+        arena.addSprite(coinSprite);
 
-        for (int i = 0; i < goombas.length; i++)
+        for (int i = 0; i < 14; i++) {
             goombas[i].addTo(arena);
-
-        arena.graphics.scale(3, 3);
+        }
 
         while(true)
         {
-            mario.update(arena, goombas, tiles, timer, tiles.getCoins(), coinsCollected);
+            mario.update(arena, goombas, tiles, timer, tiles.getCoins(), coinsCollected, coinSprite);
             tiles.update(arena);
-            for (int i = 0; i < goombas.length; i++)
+            for (int i = 0; i < 14; i++)
                 goombas[i].update(arena, tiles);
 
             if (mario.collided == 1) {
+                arena.graphics.scale(0.333333, 0.3333333);
                 arena.clearGameArena();
-                arena.width_ = 1080;
-                arena.height_ = 240;
-                arena.setBackgroundImage("Sprites/endingscreen.png");
+                arena.width_ = 800;
+                arena.height_ = 720;
+                arena.setBackgroundImage("Sprites/screens/DeathScreen.png");
+                return;
+            } else if (mario.collided == 2) {
+                arena.graphics.scale(0.3333333, 0.333333);
+                arena.clearGameArena();
+                arena.width_ = 800;
+                arena.height_ = 720;
+                arena.setBackgroundImage("Sprites/screens/WinScreen.png");
                 return;
             }
-
-            //if (mario.)
             
             arena.pause();
         }
