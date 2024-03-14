@@ -66,7 +66,7 @@ public class Mario {
             arena.addSprite(sprites[i]);
     }
     
-    public void move(double dx, double dy, GameArena arena, int stop_x, int stop_y, Text timer, Text coinsCollected) {
+    public void move(double dx, double dy, GameArena arena, int stop_x, int stop_y, Text timer, Text coinsCollected, Sprite coinSprite) {
         if (stop_x == -1 && dx < 0) {
             dx = 0;
         }
@@ -85,10 +85,11 @@ public class Mario {
         y = y + dy;
 
         //Translate the x value in to the sprite location
-        if (x > 160 && x < 2880) {
+        if (x > 80 && x < 3284) {
             arena.graphics.translate(-dx, 0);
-            timer.setXPosition(x - 148);
-            coinsCollected.setXPosition(x + 500);
+            timer.setXPosition(x - 70);
+            coinsCollected.setXPosition(x + 165);
+            coinSprite.setXPosition(x + 145);
         }
 
         //Move all mario sprites(idfk how move works i cant lie to you joe is very smart)
@@ -97,7 +98,7 @@ public class Mario {
     }
 
     // Updates every frame
-    public void update(GameArena arena, Goomba[] goombas, Tiles tiles, Text timer, Coin[] coins, Text coinsCollected) {
+    public void update(GameArena arena, Goomba[] goombas, Tiles tiles, Text timer, Coin[] coins, Text coinsCollected, Sprite coinSprite) {
         double dir_x = 0;
 
         int stop_x = 0;
@@ -225,25 +226,31 @@ public class Mario {
         if (Math.abs(velocity_x) < 0.02) velocity_x = 0;
 
         //Acc move them innit
-        move(velocity_x, velocity_y, arena, stop_x, stop_y, timer, coinsCollected);
+        move(velocity_x, velocity_y, arena, stop_x, stop_y, timer, coinsCollected, coinSprite);
 
         old_velocity_y = velocity_y;
         
-        for (int i = 0; i < goombas.length; i++) {
+        for (int i = 0; i < 14; i++) {
             if (sprites[0].collides(goombas[i].sprites[0]) && goombas[i].isDead() == false) {
                 if (y + 8 < goombas[i].getYposition()) {
                     goombas[i].die();
                     velocity_y = JUMP_SIZE / 2;
                 }
                 else {
-                    arena.graphics.translate(x - 400, 0);
+                    arena.graphics.translate(x - 80, 0);
                     collided=1;
                 }
             }
         }
 
-        if ((y > 260) || (x > 3400)) {
+        if (y > 260) {
             collided = 1;
+            arena.graphics.translate(x - 80, 0);
+        }
+
+        if (x > 3160) {
+            collided = 2;
+            arena.graphics.translate(x - 80, 0);
         }
 
         for (int i = 0; i < tiles.getCoinsSize(); i++) {
