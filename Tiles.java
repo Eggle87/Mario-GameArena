@@ -18,7 +18,7 @@ public class Tiles {
     static BufferedImage PipeImage;
     static BufferedImage blockImage;
     static BufferedImage brickImage;
-    public static BufferedImage[] QuestionImage = new BufferedImage[4];
+    public static BufferedImage[] QuestionImage = new BufferedImage[5];
     public static Sprite[] tiles = new Sprite[10000];
     public static Sprite[] questionblocks = new Sprite[10000];
     static int tilesSize = 0;
@@ -26,6 +26,9 @@ public class Tiles {
 
     static Coin coins[] = new Coin[1000];
     static int coinsSize = 0;
+    static int goombaCounter = 0;
+
+    public static Goomba[] goombalist = new Goomba[10000];
 
     public Tiles() {
         try {
@@ -52,7 +55,7 @@ public class Tiles {
             e.printStackTrace();
         }
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             try {
                 QuestionImage[i] = ImageIO.read(new File("Sprites/questionblock/"+Integer.toString(i)+".png"));
             } catch (IOException e) {
@@ -115,10 +118,11 @@ public class Tiles {
 
     public static void addTileArray()
     {
+
         String layer1 =   "                                                                                                                                                                                                                   ";
         String layer2 =   "                                                                                                                                                                                                                   ";
         String layer3 =   "                                                                                                                             cc                                                                                    ";
-        String layer4 =   "                                                                                         c                                  c                                                                                      ";
+        String layer4 =   "                                                                                 G   G   c                                  c                                                                                      ";
         String layer5 =   "                                                                                                                                                                                                                   ";
         String layer6 =   "                      ?                                                       c TTTTTTTT   TTT?             c?c          TTT    T??T                                                       □□                      ";
         String layer7 =   "                                                 c  c  c                     c c                                                                         c              c  c              □□□                      ";
@@ -126,8 +130,8 @@ public class Tiles {
         String layer9 =   "                                c  c                                                                                                                                                    □□□□□                      ";
         String layer10 =  "                ?   T?T?T                                                    T?T              T     T     ?cc?cc?     T          TT      □  □          □□  □            TT?T           □□□□□□                      ";
         String layer11 =  "                                                                                                                                        □□  □□        □□□  □□                         □□□□□□□                      ";
-        String layer12 =  "                                                                                                                                       □□□  □□□      □□□□  □□□                       □□□□□□□□                      ";
-        String layer13 =  "                                                                                                                                      □□□□  □□□□    □□□□□  □□□□                     □□□□□□□□□        □             ";
+        String layer12 =  "                      G              G              G G                                         G G                       G G G G      □□□  □□□      □□□□  □□□                G G    □□□□□□□□                      ";
+        String layer13 =  "                                                                                                                                      □□□□  □□□□    □□□□□  □□□□                     □□□□□□□□□         □            ";
         String layer14 =  "#####################################################################  ###############   ################################################################  ########################################################";
         String layer15 =  "#####################################################################  ###############   ################################################################  ########################################################";
 
@@ -152,8 +156,15 @@ public class Tiles {
                 else if (layers[x].charAt(i) == 'c') {
                     addCoin(i, x, 16, 16);
                 }
+                else if (layers[x].charAt(i)=='G')
+                {
+                   goombalist[goombaCounter] = new Goomba(i*16,x*16);
+                   goombaCounter++;
+
+                   
             }
         }
+    }
 
     }
 
@@ -180,6 +191,12 @@ public class Tiles {
 
     public void setCollected(Sprite s) {
         s.setCollected();
+        
+    }
+
+    public Goomba[] returnGoombas()
+    {
+        return goombalist;
     }
 }
 
