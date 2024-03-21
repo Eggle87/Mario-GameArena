@@ -19,16 +19,16 @@ public class Tiles {
     static BufferedImage blockImage;
     static BufferedImage brickImage;
     public static BufferedImage[] QuestionImage = new BufferedImage[5];
-    public static Sprite[] tiles = new Sprite[10000];
-    public static Sprite[] questionblocks = new Sprite[10000];
+    public static Sprite[] tiles = new Sprite[1000];
+    public static Sprite[] questionblocks = new Sprite[100];
     static int tilesSize = 0;
     static int questionsSize = 0;
 
-    static Coin coins[] = new Coin[1000];
+    static Coin coins[] = new Coin[100];
     static int coinsSize = 0;
     static int goombaCounter = 0;
 
-    public static Goomba[] goombalist = new Goomba[10000];
+    public static Goomba[] goombalist = new Goomba[100];
 
     public Tiles() {
         try {
@@ -81,6 +81,11 @@ public class Tiles {
         tilesSize++;
     }
 
+    public static Sprite getsprite()
+    {
+        return this.sprite;
+    }
+
     // Creates a new tile
     public static void addPipe(double x, double y, double w, double h) {
         Sprite tile = new Sprite(x, y, w, h, PipeImage);
@@ -118,24 +123,22 @@ public class Tiles {
 
     public static void addTileArray()
     {
-
-        String layer1 =   "                                                                                                                                                                                                                   ";
-        String layer2 =   "                                                                                                                                                                                                                   ";
-        String layer3 =   "                                                                                                                             cc                                                                                    ";
-        String layer4 =   "                                                                                 G   G   c                                  c                                                                                      ";
-        String layer5 =   "                                                                                                                                                                                                                   ";
-        String layer6 =   "                      ?                                                       c TTTTTTTT   TTT?             c?c          TTT    T??T                                                       □□                      ";
-        String layer7 =   "                                                 c  c  c                     c c                                                                         c              c  c              □□□                      ";
-        String layer8 =   "                                         c                                    c                                                                                                          □□□□                      ";
-        String layer9 =   "                                c  c                                                                                                                                                    □□□□□                      ";
-        String layer10 =  "                ?   T?T?T                                                    T?T              T     T     ?cc?cc?     T          TT      □  □          □□  □            TT?T           □□□□□□                      ";
-        String layer11 =  "                                                                                                                                        □□  □□        □□□  □□                         □□□□□□□                      ";
-        String layer12 =  "                      G              G              G G                                         G G                       G G G G      □□□  □□□      □□□□  □□□                G G    □□□□□□□□                      ";
-        String layer13 =  "                                                                                                                                      □□□□  □□□□    □□□□□  □□□□                     □□□□□□□□□         □            ";
-        String layer14 =  "#####################################################################  ###############   ################################################################  ########################################################";
-        String layer15 =  "#####################################################################  ###############   ################################################################  ########################################################";
-
-        String[] layers = {layer1,layer2,layer3,layer4,layer5,layer6,layer7,layer8,layer9,layer10,layer11,layer12,layer13,layer14,layer15};
+        String[] layers = new String[15];
+        layers[0] =  "                                                                                                                                                                                                                   ";
+        layers[1] =  "                                                                                                                                                                                                                   ";
+        layers[2] =  "                                                                                                                             cc                                                                                    ";
+        layers[3] =  "                                                                                 G   G   c                                  c                                                                                      ";
+        layers[4] =  "                                                                                                                                                                                                                   ";
+        layers[5] =  "                      ?                                                       c TTTTTTTT   TTT?             c?c          TTT    T??T                                                       **                      ";
+        layers[6] =  "                                                 c  c  c                     c c                                                                         c              c  c              ***                      ";
+        layers[7] =  "                                         c                                    c                                                                                                          ****                      ";
+        layers[8] =  "                                c  c                                                                                                                                                    *****                      ";
+        layers[9] =  "                ?   T?T?T                                                    T?T              T     T     ?cc?cc?     T          TT      *  *          **  *            TT?T           ******                      ";
+        layers[10]=  "                                                                                                                                        **  **        ***  **                         *******                      ";
+        layers[11]=  "                      G              G              G G                                         G G                       G G G G      ***  ***      ****  ***                G G    ********                      ";
+        layers[12]=  "                                                                                                                                      ****  ****    *****  ****                     *********         *            ";
+        layers[13]=  "#####################################################################  ###############   ################################################################  ########################################################";
+        layers[14]=  "#####################################################################  ###############   ################################################################  ########################################################";
 
         for (int x=0;x<15;x++)
         {
@@ -147,7 +150,7 @@ public class Tiles {
                 else if (layers[x].charAt(i) == '?') {
                     addQuestion(i,x,16.0,16.0);
                 }
-                else if (layers[x].charAt(i) == '□') {
+                else if (layers[x].charAt(i) == '*') {
                     addTile(i,x,16.0,16.0, blockImage);
                 }
                 else if (layers[x].charAt(i) == 'T') {
@@ -172,6 +175,7 @@ public class Tiles {
         return coins;
     }
 
+    // Gets the coin size
     public int getCoinsSize() {
         return coinsSize;
     }

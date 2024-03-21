@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 
 public class Goomba
 {
+    //variables
     private double x;
     private double y;
     private int w = 20;
@@ -13,6 +14,7 @@ public class Goomba
     private double SPEED = 0.25;
     private double GRAVITY = 0.1;
     
+    //make a sprite (we shoudlve extended sprite instead but i dont really care tbh)
     public Sprite[] sprites = new Sprite[1];
     private BufferedImage goombaImages[] = new BufferedImage[4];
     private BufferedImage plc;
@@ -34,6 +36,8 @@ public class Goomba
     {
         this.x = _x;
         this.y = _y;
+
+        //Collect goomba animation images
 
         for (int i = 0; i <= 3; i++) {
             try {
@@ -79,7 +83,7 @@ public class Goomba
 
     public void update(GameArena arena, Tiles tiles)
     {
-        if (dead == false) {
+        if (dead == false) { //yay ur living g
             animTimer++;
             if (animTimer > 100) {
                 animTimer = 0;

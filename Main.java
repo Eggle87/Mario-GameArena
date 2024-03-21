@@ -9,10 +9,13 @@ public class Main {
     
     public static void main(String[] args)
     {
+        //Create initial Objects
         GameArena arena = new GameArena(800,720);
         Mario mario = new Mario(32, 0);
         Tiles tiles = new Tiles();
+        Goomba goombas[] = tiles.returnGoombas();
         
+        //Starting screen
         arena.width_ = 800;
         arena.height_ = 720;
 
@@ -25,6 +28,8 @@ public class Main {
         };
         arena.setBackgroundImage("Sprites/Map.png");
 
+
+        //Timer and coins collected text
         Text timer = new Text(" ", 16, 5000000,15.0,"WHITE");
         Text coinsCollected = new Text(" ", 16, 2500000.0,15.0,"WHITE");
         
@@ -38,11 +43,9 @@ public class Main {
 
         arena.width_ = 3376;
         arena.height_ = 240;
-        arena.graphics.scale(3, 3);
+        arena.graphics.scale(3, 3); //scale game to fit in window
         
-        Goomba goombas[] = new Goomba[10000]; 
-        goombas = tiles.returnGoombas();
-
+        //Add objects to arena (after starting screen has been done)
         mario.addTo(arena);
         tiles.addTo(arena);
         arena.addText(timer);
@@ -53,22 +56,24 @@ public class Main {
         for (int i = 0; i < 14; i++) {
             goombas[i].addTo(arena);
         }
-
+        //Update every frame
         while(true)
         {
             mario.update(arena, goombas, tiles, timer, tiles.getCoins(), coinsCollected, coinSprite);
             tiles.update(arena);
+            //Updating goombas (walking+collision)
             for (int i = 0; i < 14; i++)
                 goombas[i].update(arena, tiles);
 
-            if (mario.collided == 1) {
-                arena.graphics.scale(0.333333, 0.3333333);
-                arena.clearGameArena();
+            //Testing collision innit
+            if (mario.collided == 1) { //if died from goomba
+                arena.graphics.scale(0.333333, 0.3333333); //arena.graphics.scale(0.333333, 0.3333333); <- this is what this code does 
+                arena.clearGameArena(); 
                 arena.width_ = 800;
                 arena.height_ = 720;
                 arena.setBackgroundImage("Sprites/screens/DeathScreen.png");
                 return;
-            } else if (mario.collided == 2) {
+            } else if (mario.collided == 2) { //if won
                 arena.graphics.scale(0.3333333, 0.333333);
                 arena.clearGameArena();
                 arena.width_ = 800;
@@ -76,7 +81,7 @@ public class Main {
                 arena.setBackgroundImage("Sprites/screens/WinScreen.png");
                 return;
             }
-            else if (mario.collided == 3) {
+            else if (mario.collided == 3) { //if fell to death (idk why its not second and win is in)
                 arena.graphics.scale(0.333333, 0.3333333);
                 arena.clearGameArena();
                 arena.width_ = 800;
@@ -89,7 +94,7 @@ public class Main {
         }
     }
 
-    // Creates a grid
+    // best part of the game
     /* public static void Grid(GameArena arena)
     {
         for(double i=0;i<=3500;i=i+50)
